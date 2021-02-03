@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import NewsType from '../models/News';
 
 import { getNews } from '../services/News';
 
-import { ListNews } from '../components/ListNews';
-import { News } from '../components/News';
-import { Container } from '../components/shared/Container';
-import { Row } from '../components/shared/Row';
-import { Title } from '../components/shared/Title';
-import { Item, Table } from '../components/Tawlind';
-
-import NewsType from '../models/News';
+import { ListNews, News, Tawlind } from '../components';
+import { Container, Title, Row } from '../components/shared';
 
 const news: NewsType[] = [
   {
@@ -63,9 +58,9 @@ const Home: React.FC = () => {
       <Container>
         <Title>Все новости:</Title>
         <Row>
-          <Table>
+          <Tawlind.Table>
             {news.map((news) => (
-              <Item key={news.id}>
+              <Tawlind.Item key={news.id}>
                 <News
                   img={news.img}
                   title={news.title}
@@ -74,9 +69,9 @@ const Home: React.FC = () => {
                   views={news.views}
                   comments={news.comments}
                 />
-              </Item>
+              </Tawlind.Item>
             ))}
-          </Table>
+          </Tawlind.Table>
           <ListNewsColumn>
             <ListNews title="Самые свежие новости" news={news} />
           </ListNewsColumn>

@@ -1,2 +1,5 @@
-export { default as List } from './List';
-export { default as Item } from './Item';
+import List from './List';
+import Item from './Item';
+
+const Wrapper = List;
+export default { Wrapper, Item };

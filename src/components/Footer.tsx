@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Container } from './shared/Container';
+import { Container } from './shared';
 
 export const Footer: React.FC = () => {
   return (
@@ -11,3 +11,5 @@ export const Footer: React.FC = () => {
 };
 
 const FooterStyle = styled.footer``;
+
+export default Footer;

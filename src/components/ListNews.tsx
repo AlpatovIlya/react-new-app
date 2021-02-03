@@ -2,16 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 
 import News from '../models/News';
-import { List, Item } from './List';
+import List from './List';
 
 type Props = {
   title: string;
   news: News[];
 };
 
-export const ListNews: React.FC<Props> = ({ title, news }) => {
+const ListNews: React.FC<Props> = ({ title, news }) => {
   return (
-    <List title={title}>
+    <List.Wrapper title={title}>
       {news.map((news) => (
         <Wrapper key={news.id}>
           {console.log(news)}
@@ -19,11 +19,11 @@ export const ListNews: React.FC<Props> = ({ title, news }) => {
           <Text>{news.text}</Text>
         </Wrapper>
       ))}
-    </List>
+    </List.Wrapper>
   );
 };
 
-const Wrapper = styled(Item)`
+const Wrapper = styled(List.Item)`
   padding: 20px 0;
 `;
 const Title = styled.div`
@@ -40,3 +40,5 @@ const Text = styled.span`
   text-overflow: ellipsis;
   overflow: hidden;
 `;
+
+export default ListNews;

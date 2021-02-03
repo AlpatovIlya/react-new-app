@@ -1,2 +1,7 @@
-export { default as Item } from './Item';
-export { default as Table } from './Table';
+import Item from './Item';
+import Table from './Table';
+
+const Tawlind = { Item, Table };
+
+export { Item, Table };
+export default Tawlind;

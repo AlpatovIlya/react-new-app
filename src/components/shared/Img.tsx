@@ -12,7 +12,7 @@ type PropsStyle = {
   size: number;
 };
 
-export const Img: React.FC<Props> = ({
+const Img: React.FC<Props> = ({
   src,
   size = 56,
   ariaHidden = false,
@@ -41,3 +41,5 @@ const Body = styled.div<PropsStyle>`
     object-fit: cover;
   }
 `;
+
+export default Img;

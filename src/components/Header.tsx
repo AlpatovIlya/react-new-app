@@ -1,11 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Container } from './shared/Container';
-import Logo from './shared/Logo';
-import { Row } from './shared/Row';
+import { Container, Logo, Row } from './shared';
 
-export const Header: React.FC = () => {
+
+const Header: React.FC = () => {
   return (
     <HeaderStyle>
       <Container>
@@ -47,3 +46,5 @@ const MenuItem = styled(NavLink)`
     opacity: 0.8;
   }
 `;
+
+export default Header;

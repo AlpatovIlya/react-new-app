@@ -18,3 +18,5 @@ export const A: React.FC<Props> = ({ children, href, target = '' }) => {
 const AStyle = styled.a`
   color: #20b2aa;
 `;
+
+export default A;

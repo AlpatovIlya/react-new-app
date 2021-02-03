@@ -38,3 +38,6 @@ const RowStyle = styled.div<StyleProps>`
     props.justifyCenter ? 'center' : 'space-between'};
   align-items: ${(props) => (props.alignCenter ? 'center' : '')};
 `;
+
+
+export default Row;

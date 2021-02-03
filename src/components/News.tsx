@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { A } from './shared/A';
-import { Img } from './shared/Img';
+import { A, Img } from './shared';
 
 type Props = {
   img: string;
@@ -12,14 +11,7 @@ type Props = {
   comments: number;
 };
 
-export const News: React.FC<Props> = ({
-  img,
-  title,
-  href,
-  text,
-  views,
-  comments,
-}) => {
+const News: React.FC<Props> = ({ img, title, href, text, views, comments }) => {
   return (
     <NewsStyle>
       <NewsHeader>
@@ -59,3 +51,5 @@ const NewsText = styled.p`
   font-size: 14px;
   margin-bottom: 10px;
 `;
+
+export default News;

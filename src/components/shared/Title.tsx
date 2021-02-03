@@ -5,7 +5,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const Title: React.FC<Props> = ({ children }) => {
+const Title: React.FC<Props> = ({ children }) => {
   return <TitleStyle>{children}</TitleStyle>;
 };
 
@@ -16,3 +16,5 @@ const TitleStyle = styled.h2`
   font-weight: 600;
   letter-spacing: 0.1em;
 `;
+
+export default Title;

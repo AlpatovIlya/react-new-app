@@ -5,7 +5,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const Container: React.FC<Props> = ({ children }) => {
+const Container: React.FC<Props> = ({ children }) => {
   return <ContainerStyle>{children}</ContainerStyle>;
 };
 
@@ -14,3 +14,5 @@ const ContainerStyle = styled.div`
   margin: 0 auto;
   padding: 0 10px;
 `;
+
+export default Container;
