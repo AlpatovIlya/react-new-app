@@ -1,5 +1,5 @@
 import News from '../models/News';
-import { DB } from './DB';
+import { DB, firebase } from './DB';
 
 const getNews = async (): Promise<News[]> => {
   const res = await DB.collection('news').get();
@@ -25,4 +25,31 @@ const getNews = async (): Promise<News[]> => {
 const addNews = async (news: News): Promise<void> => {
   const res = await DB.collection('news').add(news);
 };
-export { getNews, addNews };
+
+const getNewsByTitle = async (idTitle: string): Promise<News> => {
+  let candidate: News | null = null;
+
+  const res = await DB.collection('news').get();
+
+  res.forEach((doc) => {
+    const { title, transTitle, img, text, views, comments } = doc.data();
+    if (transTitle === idTitle) {
+      candidate = {
+        id: doc.id,
+        title,
+        transTitle,
+        img,
+        text,
+        views,
+        comments,
+      };
+    }
+  });
+
+  if (candidate) {
+    return candidate;
+  }
+
+  throw new Error('Новость не найдена');
+};
+export { getNews, addNews, getNewsByTitle };

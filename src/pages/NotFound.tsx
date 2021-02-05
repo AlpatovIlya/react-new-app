@@ -1,7 +1,8 @@
 import React from 'react';
+import { Title } from '../components/shared';
 
 const NotFound = () => {
-  return <div>Страница не найдена</div>;
+  return <Title>Страница не найдена</Title>;
 };
 
 export default NotFound;

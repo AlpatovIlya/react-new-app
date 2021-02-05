@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import News from '../models/News';
@@ -13,20 +14,34 @@ const ListNews: React.FC<Props> = ({ title, news }) => {
   return (
     <List.Wrapper title={title}>
       {news.map((news) => (
-        <Wrapper key={news.id}>
-          {console.log(news)}
-          <Title>{news.title}</Title>
-          <Text>{news.text}</Text>
-        </Wrapper>
+        <List.Item>
+          <Wrapper key={news.id}>
+            <ListStyle to={`/news/:${news.transTitle}`}>
+              <Title>{news.title}</Title>
+              <Text>{news.text}</Text>
+            </ListStyle>
+          </Wrapper>
+        </List.Item>
       ))}
     </List.Wrapper>
   );
 };
 
-const Wrapper = styled(List.Item)`
-  padding: 20px 0;
+const Wrapper = styled.div`
+  transition: 0.15s;
+  &:hover {
+    background: #cfcfcf;
+  }
 `;
-const Title = styled.div`
+
+const ListStyle = styled(Link)`
+  display: block;
+  text-decoration: none;
+  color: #000;
+  padding: 10px 5px;
+`;
+const Title = styled.span`
+  display: block;
   width: 100%;
   font-weight: 500;
   white-space: nowrap;

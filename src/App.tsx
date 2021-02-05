@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 import { Header, Footer } from './components';
 
-import { Home, Admin, NotFound } from './pages';
+import { Home, NewsPage, Admin, NotFound } from './pages';
 const App: React.FC = () => {
   return (
     <>
@@ -14,6 +14,7 @@ const App: React.FC = () => {
           <Main>
             <Switch>
               <Route path="/" component={Home} exact />
+              <Route path="/news/:transTitle" component={NewsPage} />
               <Route path="/admin" component={Admin} />
               <Route component={NotFound} />
             </Switch>

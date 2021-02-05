@@ -20,7 +20,7 @@ const News: React.FC<Props> = ({ img, title, href, text, views, comments }) => {
       <NewsBody>
         <NewsTitle>{title}</NewsTitle>
         <NewsText>{text}</NewsText>
-        <A href={href}>Читать дальше</A>
+        <A href={'/news/' + href}>Читать дальше</A>
       </NewsBody>
     </NewsStyle>
   );
@@ -50,6 +50,12 @@ const NewsTitle = styled.span`
 const NewsText = styled.p`
   font-size: 14px;
   margin-bottom: 10px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
 `;
 
 export default News;

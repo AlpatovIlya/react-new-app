@@ -9,9 +9,6 @@ const Item: React.FC = ({ children }) => {
   return <ItemStyle>{children}</ItemStyle>;
 };
 
-const ItemStyle = styled.div`
-  padding: 0 5px;
-  border-bottom: 1px solid gray;
-`;
+const ItemStyle = styled.div``;
 
 export default Item;

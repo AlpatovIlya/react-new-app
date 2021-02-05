@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 type Props = {
-  title: string;
+  title?: string;
   children: React.ReactNode;
 };
 
@@ -31,7 +31,6 @@ const Title = styled.div`
 `;
 
 const Body = styled.div`
-  padding: 10px 0;
   border: 1px solid #000;
 `;
 
