@@ -3,22 +3,38 @@ import styled, { css } from 'styled-components';
 
 type Props = {
   children?: React.ReactNode;
+  onClick?: () => void;
   type?: string;
   green?: boolean;
   red?: boolean;
+  yellow?: boolean;
   disabled?: boolean;
 };
 
 type StyleProps = {
   green?: boolean;
   red?: boolean;
+  yellow?: boolean;
   disabled?: boolean;
 };
 
-const Button: React.FC<Props> = ({ children, green, red, disabled }) => {
+const Button: React.FC<Props> = ({
+  children,
+  onClick,
+  green,
+  red,
+  yellow,
+  disabled,
+}) => {
   console.log(disabled);
   return (
-    <ButtonStyle red={red} green={green} disabled={disabled}>
+    <ButtonStyle
+      onClick={onClick}
+      red={red}
+      green={green}
+      yellow={yellow}
+      disabled={disabled}
+    >
       {children}
     </ButtonStyle>
   );
@@ -53,6 +69,12 @@ const ButtonStyle = styled.button<StyleProps>`
     css`
       color: #fff;
       background: #ee1137;
+    `}
+    ${(props) =>
+    props.yellow &&
+    css`
+      color: #fff;
+      background: #e3e916;
     `}
 `;
 

@@ -3,10 +3,16 @@ import styled from 'styled-components';
 import { slugify } from 'transliteration';
 
 import { Button, Container, Img, Row, Title } from '../components/shared';
-import { ListNews } from '../components';
+import { List, ListNewsItem } from '../components';
 
 import News from '../models/News';
-import { addNews, getNews } from '../services/News';
+import {
+  addNews,
+  deleteNews,
+  getNews,
+  getNewsById,
+  changeNews,
+} from '../services/News';
 import { Form } from '../components';
 
 const initialState = {
@@ -18,6 +24,7 @@ const initialState = {
 
 const Admin = () => {
   const [news, setNews] = useState<News[]>([]);
+  const [activeNews, setActiveNews] = useState<News | null>(null);
   const [isLoading, setLoading] = useState<boolean>(true);
   const [disabled, setDisabled] = useState<boolean>(false);
 
@@ -35,6 +42,14 @@ const Admin = () => {
   }, []);
 
   useEffect(() => {
+    if (!activeNews) {
+      setInputs(initialState);
+      return;
+    }
+    setInputs(activeNews);
+  }, [activeNews]);
+
+  useEffect(() => {
     setInputs((prev) => ({ ...prev, transTitle: slugify(prev.title) }));
   }, [inputs.title]);
 
@@ -46,8 +61,41 @@ const Admin = () => {
     setInputs((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleNews = async (id: string): Promise<void> => {
+    try {
+      const res: News = await getNewsById(id);
+      setActiveNews(res);
+    } catch (e) {}
+  };
+
+  const handleDelete = async (id: string): Promise<void> => {
+    setDisabled(true);
+    try {
+      await deleteNews(id);
+    } catch (e) {}
+    await fetchNews();
+    setDisabled(false);
+    setInputs(initialState);
+  };
   const isEmpty = (): boolean => {
     return !(inputs.title && inputs.text && inputs.img);
+  };
+
+  const handleChangeForm = async (id: string): Promise<void> => {
+    const news: News = {
+      id: id,
+      title: inputs.title,
+      transTitle: inputs.transTitle,
+      img: inputs.img,
+      text: inputs.text,
+      views: 0,
+      comments: 0,
+    };
+    setDisabled(true);
+    await changeNews(news);
+    fetchNews();
+    setInputs(initialState);
+    setDisabled(false);
   };
 
   const handleSubmit = async (
@@ -57,7 +105,7 @@ const Admin = () => {
     setDisabled(true);
 
     const newNews: News = {
-      id: Math.floor(Math.random() * 100),
+      id: Math.floor(Math.random() * 100).toString(),
       title: inputs.title,
       transTitle: inputs.transTitle,
       img: inputs.img,
@@ -81,7 +129,17 @@ const Admin = () => {
             {isLoading ? (
               'Loading...'
             ) : (
-              <ListNews title="Все новости" news={news} />
+              <List.Wrapper>
+                {news.map(({ id, title, text }) => (
+                  <List.Item key={id}>
+                    <ListNewsItem
+                      title={title}
+                      text={text}
+                      onClick={() => handleNews(id)}
+                    />
+                  </List.Item>
+                ))}
+              </List.Wrapper>
             )}
           </ListNewsWrapper>
         </Row>
@@ -129,9 +187,30 @@ const Admin = () => {
               />
             </Form.InputField>
             <Row justifyEnd>
-              <Button green disabled={disabled || isEmpty()}>
-                Добавить
-              </Button>
+              {activeNews ? (
+                <>
+                  <Button
+                    red
+                    disabled={disabled || isEmpty()}
+                    type="button"
+                    onClick={() => handleDelete(activeNews.id)}
+                  >
+                    Удалить
+                  </Button>
+                  <Button
+                    yellow
+                    disabled={disabled || isEmpty()}
+                    type="button"
+                    onClick={() => handleChangeForm(activeNews.id)}
+                  >
+                    Изменить
+                  </Button>
+                </>
+              ) : (
+                <Button green disabled={disabled || isEmpty()}>
+                  Добавить
+                </Button>
+              )}
             </Row>
           </MainForm>
           <Preview>

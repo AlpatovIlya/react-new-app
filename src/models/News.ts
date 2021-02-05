@@ -1,5 +1,5 @@
 interface News {
-  id: number | string;
+  id: string;
   title: string;
   transTitle: string;
   img: string;

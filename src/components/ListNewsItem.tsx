@@ -1,40 +1,33 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
 import News from '../models/News';
-import List from './List';
 
 type Props = {
   title: string;
-  news: News[];
+  text: string;
+  onClick?: () => void;
 };
 
-const ListNews: React.FC<Props> = ({ title, news }) => {
+const ListNewsItem: React.FC<Props> = ({ title, text, onClick }) => {
   return (
-    <List.Wrapper title={title}>
-      {news.map((news) => (
-        <List.Item>
-          <Wrapper key={news.id}>
-            <ListStyle to={`/news/:${news.transTitle}`}>
-              <Title>{news.title}</Title>
-              <Text>{news.text}</Text>
-            </ListStyle>
-          </Wrapper>
-        </List.Item>
-      ))}
-    </List.Wrapper>
+    <Wrapper onClick={onClick}>
+      <ListStyle>
+        <Title>{title}</Title>
+        <Text>{text}</Text>
+      </ListStyle>
+    </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  cursor: pointer;
   transition: 0.15s;
   &:hover {
     background: #cfcfcf;
   }
 `;
 
-const ListStyle = styled(Link)`
+const ListStyle = styled.div`
   display: block;
   text-decoration: none;
   color: #000;
@@ -56,4 +49,4 @@ const Text = styled.span`
   overflow: hidden;
 `;
 
-export default ListNews;
+export default ListNewsItem;

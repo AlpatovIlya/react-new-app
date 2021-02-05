@@ -23,7 +23,7 @@ const getNews = async (): Promise<News[]> => {
 };
 
 const addNews = async (news: News): Promise<void> => {
-  const res = await DB.collection('news').add(news);
+  await DB.collection('news').add(news);
 };
 
 const getNewsByTitle = async (idTitle: string): Promise<News> => {
@@ -52,4 +52,46 @@ const getNewsByTitle = async (idTitle: string): Promise<News> => {
 
   throw new Error('Новость не найдена');
 };
-export { getNews, addNews, getNewsByTitle };
+const getNewsById = async (id: string): Promise<News> => {
+  let candidate: News | null = null;
+
+  const res = await DB.collection('news').get();
+
+  res.forEach((doc) => {
+    const { title, transTitle, img, text, views, comments } = doc.data();
+    if (doc.id === id) {
+      candidate = {
+        id: doc.id,
+        title,
+        transTitle,
+        img,
+        text,
+        views,
+        comments,
+      };
+    }
+  });
+
+  if (candidate) {
+    return candidate;
+  }
+
+  throw new Error('Новость не найдена');
+};
+
+const deleteNews = async (id: string): Promise<void> => {
+  await DB.collection('news').doc(id).delete();
+};
+
+const changeNews = async (news: News): Promise<void> => {
+  await deleteNews(news.id);
+  await addNews(news);
+};
+export {
+  getNews,
+  addNews,
+  getNewsByTitle,
+  getNewsById,
+  deleteNews,
+  changeNews,
+};

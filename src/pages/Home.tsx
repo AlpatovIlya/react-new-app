@@ -4,38 +4,11 @@ import NewsType from '../models/News';
 
 import { getNews } from '../services/News';
 
-import { ListNews, News, Tawlind } from '../components';
+import { List, News, Tawlind, ListNewsItem } from '../components';
 import { Container, Title, Row } from '../components/shared';
+import { Link } from 'react-router-dom';
 
-const news: NewsType[] = [
-  {
-    id: 1,
-    title: 'Все что вы хотели знать о UUID',
-    transTitle: 'Vse_sho_ve_hotely_znat',
-    img: 'https://comphome.ru/wp-content/uploads/post/uuid.jpg',
-    text: 'Lorem 1000',
-    views: 2,
-    comments: 0,
-  },
-  {
-    id: 2,
-    title: 'Все что вы хотели знать о UUID',
-    transTitle: 'Vse_sho_ve_hotely_znat',
-    img: 'https://comphome.ru/wp-content/uploads/post/uuid.jpg',
-    text: 'Lorem 1000',
-    views: 2,
-    comments: 0,
-  },
-  {
-    id: 3,
-    title: 'Все что вы хотели знать о UUID',
-    transTitle: 'Vse_sho_ve_hotely_znat',
-    img: 'https://comphome.ru/wp-content/uploads/post/uuid.jpg',
-    text: 'Lorem 1000',
-    views: 2,
-    comments: 0,
-  },
-];
+const news: NewsType[] = [];
 
 const Home: React.FC = () => {
   const [news, setNews] = useState<NewsType[]>([]);
@@ -73,7 +46,17 @@ const Home: React.FC = () => {
             ))}
           </Tawlind.Table>
           <ListNewsColumn>
-            <ListNews title="Самые свежие новости" news={news} />
+            <List.Wrapper title="Самые свежие новости">
+              {news.map(({ id, title, text, transTitle }) => {
+                return (
+                  <List.Item key={id}>
+                    <ItemLink to={`/news/${transTitle}`}>
+                      <ListNewsItem title={title} text={text} />
+                    </ItemLink>
+                  </List.Item>
+                );
+              })}
+            </List.Wrapper>
           </ListNewsColumn>
         </Row>
       </Container>
@@ -81,12 +64,16 @@ const Home: React.FC = () => {
   );
 };
 
+const HomeStyle = styled.div`
+  padding: 20px 0;
+`;
+
 const ListNewsColumn = styled.div`
   width: 240px;
 `;
 
-const HomeStyle = styled.div`
-  padding: 20px 0;
+const ItemLink = styled(Link)`
+  text-decoration: none;
 `;
 
 export default Home;
